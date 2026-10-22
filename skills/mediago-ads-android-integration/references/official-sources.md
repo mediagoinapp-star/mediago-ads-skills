@@ -8,7 +8,7 @@ Use this precedence order when facts conflict:
 4. Customer project evidence.
 5. General knowledge only for non-versioned explanation; never for API signatures, adapter class names, coordinates, or compatibility claims.
 
-The current internal maintenance source is not a runtime dependency for external customers. Public Skill releases must embed or link only reviewed, externally accessible material.
+Public Skill releases must embed or link only reviewed, externally accessible material.
 
 ## Required fact checks before release
 

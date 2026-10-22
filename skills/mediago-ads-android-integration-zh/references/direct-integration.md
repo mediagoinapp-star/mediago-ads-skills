@@ -130,7 +130,7 @@ AdRequest request = new AdRequest.Builder().build();
 // 带可选高级参数的请求
 AdRequest customRequest = new AdRequest.Builder()
         .setBidFloor(100)                              // 可选：底价（单位：分/美分整数，默认 -1 不设底价）
-        .setTimeout(5000)                              // 可选：请求超时时间（毫秒，主に SplashAd 使用）
+        .setTimeout(5000)                              // 可选：请求超时时间（毫秒，主要用于 SplashAd）
         .setWidth(1080)                                // 可选：期望容器宽度（px）
         .setHeight(1920)                               // 可选：期望容器高度（px）
         .addExtra(SplashAd.KEY_IMMERSIVE, "true")      // 可选：开屏沉浸式额外参数
@@ -141,6 +141,6 @@ AdRequest customRequest = new AdRequest.Builder()
 ## 5. 直客接入关键守卫
 
 1. **禁止未初始化请求**：调用各广告位 `load(...)` 前建议检查 `AdMaster.isInitialized()`，或在 `InitCallback.onInitialized()` 后再触发预加载队列。
-2. **禁止同一广告位并发加载**：SDK 内部通过 `AdLoadRegistry` 对同一 `(adFormat, adUnitId)` 进行并发保护，若上一次加载未结束再次请求同一 `adUnitId`，将返回 `AdError.ERROR_ALREADY_LOADING (1040005)`。
+2. **禁止同一广告位并发加载**：SDK 内部对同一 `(adFormat, adUnitId)` 进行并发保护，若上一次加载未结束再次请求同一 `adUnitId`，将返回 `AdError.ERROR_ALREADY_LOADING (1040005)`。
 3. **展示前有效性校验**：全屏广告（插屏/激励/开屏）在调用 `show(...)` 前必须检查 `ad != null && ad.isReady() && !ad.isExpired()`，并确认传入的 `Activity` 未处于销毁状态（`!activity.isFinishing() && !activity.isDestroyed()`）。
 4. **生命周期及时释放**：广告关闭（`onAdDismissedFullScreenContent`）、展示失败（`onAdFailedToShowFullScreenContent`）或宿主页面销毁（`onDestroy`）时，必须调用 `ad.destroy()` 并将引用置空。

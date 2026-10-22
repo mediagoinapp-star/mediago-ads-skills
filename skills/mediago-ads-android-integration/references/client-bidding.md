@@ -37,9 +37,9 @@ public interface BiddingCallback {
 }
 ```
 
-## 2. Strict Parameter Validation Rules (`BiddingUtils`)
+## 2. Strict Parameter Validation Rules
 
-The SDK's internal `BiddingUtils.checkBiddingParams` strictly validates the `Map<String, Object>` passed to `notifyWin` and `notifyLoss`. If any parameter fails validation, `BiddingCallback.onBiddingResult(false, ...)` is invoked immediately and the win/loss notice is dropped.
+The SDK strictly validates the `Map<String, Object>` passed to `notifyWin` and `notifyLoss`. If any parameter fails validation, `BiddingCallback.onBiddingResult(false, ...)` is invoked immediately and the win/loss notice is dropped.
 
 ### 2.1 Win Notification `notifyWin(secondInfo, callback)` Parameters
 

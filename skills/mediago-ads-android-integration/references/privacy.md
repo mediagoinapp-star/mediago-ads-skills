@@ -6,7 +6,7 @@ The MediaGo / AdMaster Android SDK supports major global privacy frameworks (GDP
 
 ## 1. GDPR Configuration (Automatic IAB TCF v2 Lookup)
 
-The SDK's internal `CMPGdprHelper` automatically reads standard **IAB TCF v2** keys from the host app's default `SharedPreferences` (`PreferenceManager.getDefaultSharedPreferences(context)`):
+The SDK automatically reads standard **IAB TCF v2** keys from the host app's default `SharedPreferences` (`PreferenceManager.getDefaultSharedPreferences(context)`):
 
 | `SharedPreferences` Key | Type | Default | Description |
 | --- | --- | --- | --- |

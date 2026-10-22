@@ -141,6 +141,6 @@ AdRequest customRequest = new AdRequest.Builder()
 ## 5. Critical Guardrails for Direct Integration
 
 1. **Wait for Initialization**: Check `AdMaster.isInitialized()` or wait for `InitCallback.onInitialized()` before issuing ad requests.
-2. **No Concurrent Loads on the Same Placement**: The SDK guards concurrent loads per `(adFormat, adUnitId)` via `AdLoadRegistry`. Calling `load` while a request for the same `adUnitId` is already in flight immediately fails with `AdError.ERROR_ALREADY_LOADING (1040005)`.
+2. **No Concurrent Loads on the Same Placement**: The SDK guards concurrent loads per `(adFormat, adUnitId)`. Calling `load` while a request for the same `adUnitId` is already in flight immediately fails with `AdError.ERROR_ALREADY_LOADING (1040005)`.
 3. **Validate Readiness & Activity Before Show**: For fullscreen ads (`ExpressInterstitialAd`, `RewardedAd`, `SplashAd`), always verify `ad != null && ad.isReady() && !ad.isExpired()` and ensure `!activity.isFinishing() && !activity.isDestroyed()` before calling `show(...)`.
 4. **Always Destroy Used Ads**: Call `ad.destroy()` and clear references in `onAdDismissedFullScreenContent`, `onAdFailedToShowFullScreenContent`, or `Activity.onDestroy()` to prevent memory leaks.

@@ -37,9 +37,9 @@ public interface BiddingCallback {
 }
 ```
 
-## 2. 竞价参数校验规则（`BiddingUtils` 强校验）
+## 2. 竞价参数强校验规则
 
-SDK 内部的 `BiddingUtils.checkBiddingParams` 会对传入 `notifyWin` 和 `notifyLoss` 的 `Map<String, Object>` 进行**严格参数校验**。若参数类型或格式不合法，`BiddingCallback.onBiddingResult(false, ...)` 会直接返回失败且不会上报竞价日志！
+SDK 会对传入 `notifyWin` 和 `notifyLoss` 的 `Map<String, Object>` 进行**严格参数校验**。若参数类型或格式不合法，`BiddingCallback.onBiddingResult(false, ...)` 会直接返回失败且不会上报竞价日志！
 
 ### 2.1 竞胜通知 `notifyWin(secondInfo, callback)` 参数表
 

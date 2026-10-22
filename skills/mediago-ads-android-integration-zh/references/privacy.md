@@ -6,7 +6,7 @@ MediaGo / AdMaster Android SDK 支持海外主流隐私合规框架（GDPR IAB T
 
 ## 1. GDPR 合规配置（IAB TCF v2 自动读取）
 
-SDK 内置 `CMPGdprHelper`，会自动从宿主应用的默认 `SharedPreferences`（`PreferenceManager.getDefaultSharedPreferences(context)`）中读取标准 **IAB TCF v2** 字段，无需额外调用专有方法：
+SDK 会自动从宿主应用的默认 `SharedPreferences`（`PreferenceManager.getDefaultSharedPreferences(context)`）中读取标准 **IAB TCF v2** 字段，无需额外调用专有方法：
 
 | `SharedPreferences` Key | 类型 | 默认值 | 含义说明 |
 | --- | --- | --- | --- |

@@ -1,6 +1,6 @@
 # Official Test Credentials and Verification Guidelines
 
-When verifying a new integration or diagnosing whether a `2000` / `1040004` no-fill response on production IDs is caused by targeting/budget vs. client code, use the official test `appId` and placement IDs (`adUnitId`) from the SDK Demo (`AdConfigManager`) to verify end-to-end loading, rendering, and callbacks.
+When verifying a new integration or diagnosing whether a `2000` / `1040004` no-fill response on production IDs is caused by targeting/budget vs. client code, use the official test `appId` and placement IDs (`adUnitId`) below to verify end-to-end loading, rendering, and callbacks.
 
 ---
 
