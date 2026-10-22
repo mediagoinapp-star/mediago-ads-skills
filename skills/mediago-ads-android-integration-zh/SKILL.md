@@ -1,11 +1,11 @@
 ---
 name: mediago-ads-android-integration-zh
-description: 在 Android 原生 Java 或 Kotlin 工程中接入、升级、审查、排查或验证 MediaGo Ads SDK，覆盖 SDK 直连以及 AdMob、AppLovin MAX、TradPlus 和 TopOn 聚合 Adapter。
+description: 在 Android 原生 Java 或 Kotlin 工程中接入、升级、审查、排查或验证 MediaGo Ads SDK，覆盖 SDK 直连、Client Bidding 以及 AdMob、AppLovin MAX、TradPlus 和 TopOn 聚合 Adapter。
 ---
 
 # MediaGo Ads Android 接入（中文）
 
-本 Skill 用于 Android 原生工程的 MediaGo Ads 工作。支持 SDK 直连及已批准的 AdMob、AppLovin MAX、TradPlus、TopOn 国际版、TopOn 旧版 Adapter 路径；不支持 Unity、Flutter、React Native、仅 iOS 工程或未文档化的自定义桥接。
+本 Skill 用于 Android 原生工程的 MediaGo Ads 工作。支持 SDK 直连、Client Bidding 及已批准的 AdMob、AppLovin MAX、TradPlus、TopOn 国际版、TopOn 旧版 Adapter 路径；不支持 Unity、Flutter、React Native、仅 iOS 工程或未文档化的自定义桥接。
 
 ## 不可跳过的规则
 
@@ -24,6 +24,7 @@ description: 在 Android 原生 Java 或 Kotlin 工程中接入、升级、审�
 - 新增 SDK 直连；
 - 在直连工程中新增广告样式；
 - 接入 AdMob、MAX、TradPlus、TopOn 国际版或 TopOn 旧版 Adapter；
+- Client Bidding 接入；
 - 迁移或升级；
 - 构建、Manifest、初始化、加载、展示、回调或无填充问题排查；
 - 接入审查。
@@ -54,6 +55,7 @@ Manifest Activity、权限、进程覆盖与 merger 证据
 
 - **SDK 直连：** 应用负责 `AdMaster.initialize` 和 MediaGo 广告 API；
 - **Adapter：** 选定聚合平台负责文档规定的 Adapter 生命周期；不得因习惯增加直连初始化。
+- **Client Bidding：** 应用负责并发请求、有效期检查、价格比较及竞胜/竞败回传；仅当客户明确自行管理端侧竞价时选择，不属于 Adapter 路径。
 
 TopOn 必须先检查已安装类型：
 
@@ -62,7 +64,7 @@ TopOn 必须先检查已安装类型：
 
 若路径、已解析依赖、已批准版本或初始化归属未知，说明阻塞点，只请求解决问题所需的证据；不得提前写代码。
 
-按需阅读[工程前置条件](references/project-prerequisites.md)、[SDK 直连接入](references/direct-integration.md)、[聚合 Adapter](references/mediation-adapters.md)和[兼容性维护](references/compatibility.md)。
+按需阅读[工程前置条件](references/project-prerequisites.md)、[SDK 直连接入](references/direct-integration.md)、[聚合 Adapter](references/mediation-adapters.md)、[Client Bidding](references/client-bidding.md)和[兼容性维护](references/compatibility.md)。
 
 ## 4. 给出计划并获得明确确认
 
@@ -96,6 +98,7 @@ TopOn 必须先检查已安装类型：
 - 初始化：[SDK 直连接入](references/direct-integration.md)
 - 广告样式：[广告样式](references/ad-formats.md)
 - 聚合：[聚合 Adapter](references/mediation-adapters.md)
+- Client Bidding：[Client Bidding](references/client-bidding.md)
 - 多进程：[多进程](references/multi-process.md)
 - 隐私/权限：[隐私与权限](references/privacy.md)
 - 升级：[迁移与升级](references/migration.md)

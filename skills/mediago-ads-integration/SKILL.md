@@ -12,7 +12,8 @@ Use this skill only to identify the customer's project and select the supported 
 At the project root, inspect filenames and directories without modifying anything.
 
 - **Native Android:** `settings.gradle`, `settings.gradle.kts`, an Android application module, or `AndroidManifest.xml`.
-- **Unity:** both `Assets/` and `ProjectSettings/`.
+- **Unity Android bridge:** Unity markers plus Android-target evidence such as `Assets/Plugins/Android/`, `*Dependencies.xml`, `mainTemplate.gradle`, `settingsTemplate.gradle`, `AndroidManifest.xml`, `AndroidJavaObject`, or `AndroidJavaProxy`.
+- **Unity without an Android bridge:** both `Assets/` and `ProjectSettings/`, but no Android-target/bridge evidence.
 - **Mixed project:** Unity markers plus one or more independent native Android modules.
 
 Read [platform routing](references/platform-routing.md) when the project is mixed or cannot be identified reliably.
@@ -20,8 +21,9 @@ Read [platform routing](references/platform-routing.md) when the project is mixe
 ## Route
 
 - Native Android only: load and follow `mediago-ads-android-integration`.
-- Unity only: state that MediaGo does not currently provide an official Unity SDK. Do not propose embedding the Android AAR, fabricate C# APIs, or claim Unity support.
+- Unity with Android bridge evidence: load and follow `mediago-ads-unity-android-integration`. This is a documented Unity-to-Android bridge workflow, not an official standalone Unity SDK.
+- Unity without Android bridge evidence: state that MediaGo does not currently provide an official standalone Unity SDK. Do not fabricate C# APIs. If the customer explicitly wants an Android bridge, route to the Unity Android bridge workflow for a feasibility inspection before proposing code.
 - Mixed Unity + native Android: ask which module should receive the integration. Route only if the customer chooses the independent Android module.
 - Unknown: ask one concise question: “Is this a native Android project, a Unity project, or a project with an independent Android module?”
 
-When routing, state the selected workflow and preserve the user's original request. The Android workflow will inspect the project and seek confirmation before any modification or build.
+When routing, state the selected workflow and preserve the user's original request. Every integration workflow will inspect the project and seek confirmation before any modification, dependency resolution, export, or build.

@@ -1,11 +1,11 @@
 ---
 name: mediago-ads-android-integration
-description: Integrate, upgrade, troubleshoot, audit, or validate the MediaGo Ads SDK in native Android Java or Kotlin projects, including direct integration and AdMob, AppLovin MAX, TradPlus, and TopOn adapters.
+description: Integrate, upgrade, troubleshoot, audit, or validate the MediaGo Ads SDK in native Android Java or Kotlin projects, including direct integration, Client Bidding, and AdMob, AppLovin MAX, TradPlus, and TopOn adapters.
 ---
 
 # MediaGo Ads Android Integration
 
-Use this Skill for native Android MediaGo Ads work. It supports direct SDK integration and approved AdMob, AppLovin MAX, TradPlus, TopOn international, and TopOn legacy adapter paths. It does not support Unity, Flutter, React Native, iOS-only projects, or undocumented custom bridges.
+Use this Skill for native Android MediaGo Ads work. It supports direct SDK integration, Client Bidding, and approved AdMob, AppLovin MAX, TradPlus, TopOn international, and TopOn legacy adapter paths. It does not support Unity, Flutter, React Native, iOS-only projects, or undocumented custom bridges.
 
 ## Non-negotiable rules
 
@@ -24,6 +24,7 @@ Classify the request as one of:
 - new direct SDK integration;
 - add an ad format to a direct integration;
 - AdMob, MAX, TradPlus, TopOn international, or TopOn legacy adapter integration;
+- Client Bidding integration;
 - migration or upgrade;
 - build, manifest, initialization, load, show, callback, or no-fill troubleshooting;
 - integration audit.
@@ -54,6 +55,7 @@ Select exactly one path before generating implementation code:
 
 - **Direct SDK:** the app owns `AdMaster.initialize` and MediaGo ad APIs.
 - **Adapter:** the selected mediation platform owns the documented adapter lifecycle. Do not add direct initialization merely by habit.
+- **Client Bidding:** the app owns concurrent demand requests, expiration checks, price comparison, and win/loss reporting. Use this only when the customer explicitly owns the on-device auction; it is not an adapter path.
 
 For TopOn, inspect the installed family before choosing an adapter:
 
@@ -62,7 +64,7 @@ For TopOn, inspect the installed family before choosing an adapter:
 
 If the integration path, resolved dependency, approved version, or initialization ownership is unknown, explain the blocker and request only the evidence needed to resolve it. Do not write code yet.
 
-Read [project prerequisites](references/project-prerequisites.md), [direct integration](references/direct-integration.md), [mediation adapters](references/mediation-adapters.md), and [compatibility](references/compatibility.md) as applicable.
+Read [project prerequisites](references/project-prerequisites.md), [direct integration](references/direct-integration.md), [mediation adapters](references/mediation-adapters.md), [Client Bidding](references/client-bidding.md), and [compatibility](references/compatibility.md) as applicable.
 
 ## 4. Plan and obtain explicit confirmation
 
@@ -96,6 +98,7 @@ State the highest evidence level actually obtained and any remaining customer-si
 - Direct initialization: [direct integration](references/direct-integration.md)
 - Formats: [ad formats](references/ad-formats.md)
 - Mediation: [mediation adapters](references/mediation-adapters.md)
+- Client Bidding: [Client Bidding](references/client-bidding.md)
 - Multi-process: [multi-process](references/multi-process.md)
 - Privacy/permissions: [privacy](references/privacy.md)
 - Upgrade/migration: [migration](references/migration.md)

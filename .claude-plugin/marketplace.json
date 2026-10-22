@@ -1,0 +1,33 @@
+{
+  "name": "mediago-ads-skills",
+  "owner": {
+    "name": "MediaGo Ads SDK Team",
+    "url": "https://github.com/mediagoinapp-star/mediago-ads-skills"
+  },
+  "plugins": [
+    {
+      "name": "mediago-ads",
+      "source": "./",
+      "description": "English Agent Skills for integrating, auditing, and troubleshooting MediaGo Ads SDK in Android and Unity Android bridge projects.",
+      "version": "2.4.0",
+      "strict": false,
+      "skills": [
+        "./skills/mediago-ads-integration",
+        "./skills/mediago-ads-android-integration",
+        "./skills/mediago-ads-unity-android-integration"
+      ]
+    },
+    {
+      "name": "mediago-ads-zh",
+      "source": "./",
+      "description": "MediaGo Ads SDK 官方中文接入、审查与排障 Agent Skills（覆盖 Android 原生直连、Client Bidding、五大聚合 Adapter 及 Unity Android 桥接）。",
+      "version": "2.4.0",
+      "strict": false,
+      "skills": [
+        "./skills/mediago-ads-integration-zh",
+        "./skills/mediago-ads-android-integration-zh",
+        "./skills/mediago-ads-unity-android-integration-zh"
+      ]
+    }
+  ]
+}

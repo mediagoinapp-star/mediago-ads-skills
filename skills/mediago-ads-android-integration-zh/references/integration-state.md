@@ -8,7 +8,7 @@
 
 ```text
 工程：Android App 模块 / 语言 / Gradle DSL
-路径：direct | admob | max | tradplus | topon-international | topon-legacy
+路径：direct | client-bidding | admob | max | tradplus | topon-international | topon-legacy
 SDK：声明版本 / 已解析版本 / 已批准版本
 Adapter：声明版本 / 已解析版本 / 已批准版本
 初始化：缺失 | 已发现未验证 | 已验证
@@ -26,7 +26,7 @@ Adapter：声明版本 / 已解析版本 / 已批准版本
 
 ### 门禁 B：选定接入路径
 
-生成代码前必须确认一种路径：SDK 直连、AdMob、MAX、TradPlus、TopOn 国际版或 TopOn 旧版。除非存在已批准且有文档的例外，不得在同一广告流量路径混用直连与 Adapter 生命周期。
+生成代码前必须确认一种路径：SDK 直连、Client Bidding、AdMob、MAX、TradPlus、TopOn 国际版或 TopOn 旧版。除非存在已批准且有文档的例外，不得在同一广告流量路径混用直连与 Adapter 生命周期。Client Bidding 是应用负责竞价与回传的直连加载变体，不是 Adapter 路径；不能仅因应用其他位置使用聚合 SDK 就选择该路径。
 
 ### 门禁 C：依赖已解析
 
@@ -36,11 +36,11 @@ Adapter：声明版本 / 已解析版本 / 已批准版本
 
 ### 门禁 D：初始化
 
-直连场景需验证只有一条应用级初始化路径，且首个广告加载发生在初始化成功后。Adapter 场景应以其文档定义的初始化归属为准，默认不增加直连初始化。
+直连和 Client Bidding 场景需验证只有一条应用级初始化路径，且首个广告加载发生在初始化成功后。Adapter 场景应以其文档定义的初始化归属为准，默认不增加直连初始化。
 
 ### 门禁 E：变更确认
 
-A-D 门禁完成后，展示文件改动和验证命令。获得用户明确确认前，不得编辑、构建或解析依赖。
+A-D 门禁完成后，展示文件改动和验证命令。确认必须绑定包含文件、命令、依赖/版本变更、Manifest 影响及外发数据的计划标识和摘要。获得用户明确确认前，不得编辑、构建或解析依赖；任何新增文件、命令、依赖/版本、权限或外发数据都会使原确认失效，必须重新给出计划并确认。
 
 ## 停止条件
 

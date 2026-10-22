@@ -4,9 +4,11 @@
 
 A Gradle project is not necessarily an Android application. Confirm an application module (`com.android.application`), an Android manifest, or Android source before selecting the Android workflow.
 
-## Unity boundary
+## Unity Android bridge boundary
 
-A Unity project contains both `Assets/` and `ProjectSettings/`. There is no supported MediaGo Unity SDK at this time. The correct response is to identify the limitation and direct the customer to MediaGo support for product availability; it is not safe to derive a Unity integration from native Android APIs.
+A Unity project contains both `Assets/` and `ProjectSettings/`. MediaGo does not provide a standalone Unity SDK/package. However, a Unity/Unity-China project with Android-target evidence may use the supported **Unity Android bridge workflow**: EDM4U/Gradle templates supply the Android SDK, while reviewed C# `AndroidJavaObject`/`AndroidJavaProxy` bridge code owns calls and callbacks.
+
+Route to `mediago-ads-unity-android-integration` when `Assets/Plugins/Android/`, an EDM `*Dependencies.xml`, Android Gradle/Manifest templates, or bridge code is present. Do not call this an official Unity SDK, fabricate C# API signatures, or edit generated `Library/` Gradle output.
 
 ## Mixed repositories
 

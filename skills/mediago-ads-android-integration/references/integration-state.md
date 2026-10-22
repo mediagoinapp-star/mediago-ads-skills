@@ -8,7 +8,7 @@ Maintain this compact record while working:
 
 ```text
 project: Android app module / language / Gradle DSL
-path: direct | admob | max | tradplus | topon-international | topon-legacy
+path: direct | client-bidding | admob | max | tradplus | topon-international | topon-legacy
 sdk: requested / resolved / approved version
 adapter: requested / resolved / approved version
 initialization: absent | present-unverified | verified
@@ -26,7 +26,7 @@ Proceed only after confirming an Android application module. If a Unity-only pro
 
 ### Gate B — selected path
 
-Before code generation, confirm one path: direct SDK, AdMob, MAX, TradPlus, TopOn international, or TopOn legacy. Do not mix direct and adapter lifecycles for the same inventory without an approved documented exception.
+Before code generation, confirm one path: direct SDK, Client Bidding, AdMob, MAX, TradPlus, TopOn international, or TopOn legacy. Do not mix direct and adapter lifecycles for the same inventory without an approved documented exception. Client Bidding is a direct-load variant with app-owned auction/reporting; it is not an adapter path and must not be selected only because an app also uses a mediation SDK elsewhere.
 
 ### Gate C — resolved dependencies
 
@@ -36,11 +36,11 @@ If verification needs a Gradle command, show the exact command and request confi
 
 ### Gate D — initialization
 
-For direct integration, verify a single application-level initialization path and that the first load happens only after initialization success. For adapter integration, follow the adapter's documented initialization ownership; do not add direct initialization by default.
+For direct integration and Client Bidding, verify a single application-level initialization path and that the first load happens only after initialization success. For adapter integration, follow the adapter's documented initialization ownership; do not add direct initialization by default.
 
 ### Gate E — change approval
 
-After Gates A-D, show file changes and the verification command. Wait for explicit approval before editing, building, or resolving dependencies.
+After Gates A-D, show file changes and the verification command. Bind approval to a plan identifier and digest that list files, commands, dependency/version changes, manifest impacts, and any external data. Wait for explicit approval before editing, building, or resolving dependencies. Any newly required file, command, dependency/version change, permission, or external-data transfer invalidates the approval and requires a new plan.
 
 ## Stop conditions
 
