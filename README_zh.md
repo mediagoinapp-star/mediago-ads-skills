@@ -19,24 +19,24 @@
 #### A. 覆盖三大主流接入模式
 | 接入模式 | 支持的具体功能 |
 |---|---|
-| **SDK 直连 (Direct Integration)** | 自动检查并配置 `mavenCentral()` 与 `cc.admaster.android:sdk:2.4.0` 依赖；生成 `Application` 单点初始化代码（`AdMaster.initialize` + `AdMasterSetting`），确保所有广告加载严格在 `InitCallback.onInitialized()` 成功后触发。 |
-| **客户端竞价 (Client Bidding)** | 支持端侧并发竞价流程：通过 `getResponseInfo().getEcpmLevel()` 获取实时价格、比价前校验 `isExpired()`、竞胜展示前调用 `notifyWin`、竞败或过期时调用 `notifyLoss`（支持 `LossReason` 标准原因码，如被高价击败传 `102`）并销毁释放。 |
-| **聚合平台 Adapter（支持 5 大聚合）** | 完整支持 **Google AdMob**、**AppLovin MAX**、**TradPlus**、**TopOn 国际版 (`com.thinkup`)**、**TopOn 旧版 (`com.anythink`)**。自动区分 TopOn 家族依赖、匹配对应 Adapter Maven 坐标、输出聚合后台 Custom Event 全限定类名与参数映射（`app_id` / `placement_id`），并防止错误叠加直连初始化。 |
+| **SDK 直连 (Direct Integration)** | 自动检查并配置 `mavenCentral()` 与 `cc.admaster.android:sdk:2.0.38` 依赖；生成 `Application` 单点初始化代码（`AdMaster.initialize` + `AdMasterSetting`），确保所有广告加载严格在 `InitCallback.onInitialized()` 成功后触发。 |
+| **客户端竞价 (Client Bidding)** | 支持端侧并发竞价流程：通过 `getResponseInfo().getEcpmLevel()` 获取实时价格、比价前校验 `isReady()`、竞胜展示前调用 `notifyWin`、竞败或放弃展示时调用 `notifyLoss`（支持整型价格与原因码如 `102`）并销毁释放。 |
+| **聚合平台 Adapter（支持 5 大聚合）** | 完整支持 **Google AdMob**、**AppLovin MAX**、**TradPlus**、**TopOn 国际版 (`com.thinkup`)**、**TopOn 旧版 (`com.anythink`)**。自动区分 TopOn 家族依赖、匹配对应 Adapter Maven 坐标、输出聚合后台 Custom Event 全限定类名与参数映射（AdMob 为 `app_id` + `ad_unit_id`，其他平台为 `app_id` + `placement_id`）。 |
 
 #### B. 覆盖五大广告样式（提供完整 Java & Kotlin 代码模板）
-| 广告样式 | 核心 SDK 类 | Skill 自动实现的接入细节 |
+| 广告样式 | 核心 SDK 类 (`cc.admaster.android.proxy.api.*`) | Skill 自动实现的接入细节 |
 |---|---|---|
-| **激励视频 (Rewarded)** | `RewardedAd`、`RewardedAdLoadCallback`、`RewardedAdInteractionCallback` | 单实例并发加载保护、`isReady()` 与存活 `Activity` 校验、严格仅在 `onUserEarnedReward(RewardItem)` 中单次发放奖励、关闭/失败终态自动 `destroy()`。 |
-| **插屏广告 (Interstitial)** | `ExpressInterstitialAd`、`ExpressInterstitialAdLoadCallback`、`ExpressInterstitialAdInteractionCallback` | 模板插屏预加载、展示条件检查、曝光/点击/关闭/展示失败全回调处理及宿主业务流程兜底。 |
-| **开屏广告 (Splash)** | `SplashAd`、`SplashAdLoadCallback`、`SplashAdInteractionCallback` | 冷/热启动开屏加载、承载容器 `ViewGroup` 可见性与尺寸校验、5 秒超时保護计时器、关闭与异常时安全跳转主界面。 |
-| **信息流自渲染 (Native)** | `NativeAdLoader`、`NativeAd`、`NativeAdView`、`AdMediaView` | 自渲染素材绑定（标题、描述、Icon、CTA 按钮、`AdMediaView` 视频/主图容器）、`registerViewForInteraction` 可点击区域注册、列表复用与页面销毁时的内存释放。 |
-| **横幅广告 (Banner)** | `BannerAdLoader`、`AdMBannerView`、`BannerAdSize` | 支持 `BANNER_320_50`（`320x50`）与 `MEDIUM_RECTANGLE_300_250`（`300x250`）两种标准尺寸加载、父容器挂载与生命周期销毁。 |
+| **激励视频 (Rewarded)** | `RewardedAd`、`AdLoadCallback<RewardedAd>`、`FullScreenContentCallback`、`OnUserEarnedRewardListener` | 单实例并发加载保护、`isReady()` 与存活 `Activity` 校验、严格仅在 `onUserEarnedReward(RewardItem)` 中单次发放奖励、关闭/失败终态自动 `destroy()`。 |
+| **插屏广告 (Interstitial)** | `ExpressInterstitialAd`、`AdLoadCallback<ExpressInterstitialAd>`、`FullScreenContentCallback` | 模板插屏预加载、展示条件检查（`isReady()`）、曝光/点击/关闭/展示失败全回调处理及宿主业务流程兜底。 |
+| **开屏广告 (Splash)** | `SplashAd`、`AdLoadCallback<SplashAd>`、`FullScreenContentCallback` | 支持预加载后 `show(ViewGroup)` 或一步式 `SplashAd.loadAndShow(...)`、承载容器可见性与尺寸校验、超时保护计时器、关闭与异常时安全跳转主界面。 |
+| **信息流自渲染 (Native)** | `NativeAdLoader`、`NativeAd`、`NativeAdLoadListener`、`NativeAdInteractionListener` | 自渲染素材绑定（标题、描述、Icon、主图/视频视图）、`registerViewForInteraction(container, clickViews, creativeViews, listener)` 可点击区域注册、列表复用与页面销毁时的内存释放。 |
+| **横幅广告 (Banner)** | `BannerAdLoader`、`BannerAd`、`AdMBannerView`、`BannerAdListener` | 异步拉取 `BannerAd`、设置 `AdMBannerView.setAdSize(widthDp, heightDp)` 并绑定 `setBannerAd(ad)`、父容器挂载与页面销毁时释放。 |
 
 #### C. 进阶配置、合规设置与错误码诊断
-- **多进程支持**：当应用在非主进程加载或展示广告时，指导配置 `AdActivityController`（映射 `MainProcessAdActivity` / `SubProcessAdActivity` 等组件）。
-- **海外隐私合规接口**：支持在初始化前（`AdMasterSetting.Builder`）或运行时（`AdMaster` 静态方法）配置 **GDPR** (`setGdprConsent`)、**CCPA / 美国州隐私** (`setUsPrivacyLimit`) 与 **COPPA** (`setCoppa`)。
-- **全量错误码速查与排障**：内置 `AdError` 全量错误码表（`1010001`、`1020001`~`1020004`、`1030001`~`1030004`、`1040001`~`1040008`、`20000`、`20400`、`30001`、`40001`、`40002`、`50001`），可根据报错码快速定位代码或配置问题。
-- **官方联调测试参数**：内置官方测试 App ID（`39590`）及五大广告样式测试广告位 ID（激励 `12377`、插屏 `12378`、开屏 `12379`、横幅 `12380`、原生 `12382`），方便开发者快速跑通 Demo，并内置防误写生产配置的保护门禁。
+- **多进程与组件声明**：自动核验 Manifest Merger 产物中的 `MainProcessAdActivity` 与 `FileProvider` 组件合并状态。
+- **海外隐私合规接口**：支持 **GDPR IAB TCF v2**（自动读取默认 `SharedPreferences` 中的 `IABTCF_gdprApplies`、`IABTCF_TCString`、`IABTCF_AddtlConsent`）、**CCPA / COPPA 个性化广告限制**（`AdMasterSetting.getInstance().setLimitPersonalAds(boolean)` 与 `MobadsPermissionSettings.setLimitPersonalAds(boolean)`）以及细粒度设备信号权限控制（`MobadsPermissionSettings`）。
+- **全量错误码速查与排障**：内置三层错误码诊断表——客户端 7 位 SDK 错误码（`1010001`~`4030007`）、服务端 4 位状态码（`2000` 无填充、`3000~3004` 策略过滤、`4000~4004` 参数错误、`1000~1999` 服务端异常）及聚合 Adapter 错误码（AdMob `100~104`、TopOn `1001~1007`）。
+- **官方联调测试参数**：内置官方测试 App ID（`ad2fd73dca2ccffd312495bcd8a33d29`）及五大广告样式测试广告位 ID（激励 `100090001`、插屏 `100090002`、原生 `100090003`、开屏 `100090004`、横幅 `100090005`），方便开发者快速跑通 Demo，并内置防误写生产配置的保护门禁。
 - **接入审查与版本升级**：支持对照已验证兼容矩阵（[`compatibility/compatibility.json`](compatibility/compatibility.json)）检查 AGP / Gradle / JDK / `minSdk` / `compileSdk`、R8/ProGuard 混淆规则、Manifest 合并结果与生命周期内存泄漏隐患。
 
 ### 3. Unity / 团结引擎 Android 桥接支持 (`mediago-ads-unity-android-integration-zh`)
@@ -87,6 +87,20 @@ npx skills add mediagoinapp-star/mediago-ads-skills \
 - **Claude Code**：`.claude/skills/`
 - **Codex / 通用 Agent**：`.agents/skills/`
 
+### 方式四：配套挂载官方 MCP Server（推荐，与 Skill 双剑合璧）
+本仓库配套提供官方 MCP 服务端 [**`mediago-ads-mcp`**](https://github.com/mediagoinapp-star/mediago-ads-mcp)，提供版本兼容矩阵查询、多语言代码模板生成、聚合参数 JSON 生成、三层错误码精准诊断与 Logcat 10 阶段生命周期漏斗分析。在 `.cursor/mcp.json` 或 `.mcp.json` 中添加：
+
+```json
+{
+  "mcpServers": {
+    "mediago-ads-mcp": {
+      "command": "npx",
+      "args": ["-y", "github:mediagoinapp-star/mediago-ads-mcp"]
+    }
+  }
+}
+```
+
 ---
 
 ## 包含的 Skill 目录清单
@@ -109,13 +123,13 @@ npx skills add mediagoinapp-star/mediago-ads-skills \
 - **场景 1：全新 SDK 直连接入（含官方测试参数）**
   > “请使用 MediaGo Android 接入 Skill 检查我当前的 Android 工程，使用官方测试参数帮我规划 SDK 初始化以及激励视频（RewardedAd）和插屏广告（ExpressInterstitialAd）的直连接入方案。”
 - **场景 2：在现有工程中新增信息流自渲染 / 横幅 / 开屏广告**
-  > “帮我在现有的 Android 工程中新增 MediaGo 信息流自渲染广告（`NativeAdLoader` + `NativeAdView` + `AdMediaView`），并处理好可点击区域注册和页面销毁释放。”
+  > “帮我在现有的 Android 工程中新增 MediaGo 信息流自渲染广告（`NativeAdLoader` + `NativeAd` + `registerViewForInteraction`），并处理好可点击区域注册和页面销毁释放。”
 - **场景 3：接入聚合平台 Adapter（AdMob / MAX / TradPlus / TopOn）**
   > “请检查我的 Android 应用模块，帮我接入 MediaGo 的 AppLovin MAX（或 TopOn / AdMob / TradPlus）聚合 Adapter，并告诉我聚合后台需要填写的自定义 Adapter 全限定类名和参数格式。”
 - **场景 4：接入 Client Bidding（客户端竞价）**
-  > “帮我在现有的激励视频加载逻辑中接入 MediaGo Client Bidding，实现获取 eCPM、校验过期时间，并在竞胜/竞败时调用 `notifyWin` 和 `notifyLoss`。”
+  > “帮我在现有的激励视频加载逻辑中接入 MediaGo Client Bidding，实现获取 eCPM（`getResponseInfo().getEcpmLevel()`）、校验就绪状态，并在竞胜/竞败时调用 `notifyWin` 和 `notifyLoss`。”
 - **场景 5：报错码诊断与无填充排查**
-  > “我们请求广告时回调了错误码 `1030003`（或 `20400` / `40001`），请结合我们的代码帮我排查具体原因并给出修复方案。”
+  > “我们请求广告时回调了错误码 `1030003`（或 `1040004` / `2000` / `4000`），请结合我们的代码帮我排查具体原因并给出修复方案。”
 - **场景 6：上线前接入完整性审查（Audit）**
   > “请使用 MediaGo Android Skill 对我当前工程的广告接入代码做一次全面审查，检查是否存在初始化时机风险、内存泄漏、混淆缺失或测试 ID 未替换问题。”
 

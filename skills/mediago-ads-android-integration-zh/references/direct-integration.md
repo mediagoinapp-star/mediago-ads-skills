@@ -26,7 +26,7 @@ public final class AdMaster {
     public static boolean isInitialized();
 
     @NonNull
-    public static String getVersion();
+    public static String getSDKVersion();
 
     public interface InitCallback {
         void onInitialized();
@@ -67,7 +67,7 @@ public class MyApplication extends Application {
         AdMaster.initialize(this, ADMASTER_APP_ID, new AdMaster.InitCallback() {
             @Override
             public void onInitialized() {
-                Log.i(TAG, "AdMaster SDK initialized, version=" + AdMaster.getVersion());
+                Log.i(TAG, "AdMaster SDK initialized, version=" + AdMaster.getSDKVersion());
                 // 可在此处启动首屏广告加载或通知广告管理器预加载
             }
 
@@ -105,7 +105,7 @@ class MyApplication : Application() {
 
         AdMaster.initialize(this, ADMASTER_APP_ID, object : AdMaster.InitCallback {
             override fun onInitialized() {
-                Log.i(TAG, "AdMaster SDK initialized, version=${AdMaster.getVersion()}")
+                Log.i(TAG, "AdMaster SDK initialized, version=${AdMaster.getSDKVersion()}")
             }
 
             override fun onFailed(code: Int, msg: String?) {
